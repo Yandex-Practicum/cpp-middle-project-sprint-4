@@ -31,7 +31,7 @@ struct IAccumulator {
     virtual ~IAccumulator() = default;
 
 protected:
-    bool is_finilized = false;
+    bool is_finalized = false;
 };
 
 struct MetricsAccumulator {
