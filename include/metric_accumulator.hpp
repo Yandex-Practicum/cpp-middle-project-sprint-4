@@ -26,7 +26,7 @@ namespace analyser::metric_accumulator {
 
 struct IAccumulator {
     virtual void Accumulate(const metric::MetricResult& metric_result) = 0;
-    virtual void Finilize() = 0;
+    virtual void Finalize() = 0;
     virtual void Reset() = 0;
     virtual ~IAccumulator() = default;
 
@@ -40,7 +40,7 @@ struct MetricsAccumulator {
         // здесь ваш код
     }
     template <typename Accumulator>
-    const Accumulator& GetFinilizedAccumulator(const std::string& metric_name) const {
+    const Accumulator& GetFinalizedAccumulator(const std::string& metric_name) const {
         // здесь ваш код
     }
     void AccumulateNextFunctionResults(

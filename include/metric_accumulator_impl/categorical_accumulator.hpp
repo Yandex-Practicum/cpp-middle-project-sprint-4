@@ -23,7 +23,7 @@ namespace analyser::metric_accumulator::metric_accumulator_impl {
 struct CategoricalAccumulator: public IAccumulator {
     void Accumulate(const metric::MetricResult& metric_result) override;
 
-    virtual void Finilize() override;
+    virtual void Finalize() override;
 
     virtual void Reset() override;
 
