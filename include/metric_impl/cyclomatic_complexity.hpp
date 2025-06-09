@@ -21,7 +21,7 @@
 namespace analyser::metric::metric_impl {
 
 struct CyclomaticComplexityMetric: IMetric {
-    // здесь ваш код 
+    // здесь ваш код
 };
 
 } // namespace analyser::metric::metric_impl

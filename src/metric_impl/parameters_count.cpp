@@ -1,3 +1,5 @@
+#include "metric_impl/parameters_count.hpp"
+
 #include <array>
 #include <cstdio>
 #include <cstdlib>
@@ -11,8 +13,6 @@
 #include <string>
 #include <variant>
 #include <vector>
-
-#include "metric_impl/parameters_count.hpp"
 
 namespace analyser::metric::metric_impl {
 

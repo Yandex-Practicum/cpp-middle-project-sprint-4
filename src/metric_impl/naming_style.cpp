@@ -1,3 +1,5 @@
+#include "metric_impl/naming_style.hpp"
+
 #include <unistd.h>
 
 #include <algorithm>
@@ -14,8 +16,6 @@
 #include <string>
 #include <variant>
 #include <vector>
-
-#include "metric_impl/naming_style.hpp"
 
 namespace analyser::metric::metric_impl {
 
