@@ -8,15 +8,36 @@
             "type": "lldb",
             "request": "launch",
             "name": "Launch Analyser",
-            "program": "${workspaceFolder}/build/Analyser",
+            "program": "${workspaceFolder}/build/analyzer",
             "args": [
-                "-i",
-                "input.txt",
-                "--command",
-                "checksum"
+                "-f",
+                "files/sample.py"
             ],
-            "cwd": "${workspaceFolder}/build"
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "GCC: Build Debug",
+            "initCommands": ["settings set target.disable-aslr false"]
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Launch Debug metric_test",
+            "program": "${workspaceFolder}/build/src/metric_impl/metric_test",
+            "args": [
+            ],
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "GCC: Build Debug",
+            "initCommands": ["settings set target.disable-aslr false"]
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Launch Debug metric_accumulator_test",
+            "program": "${workspaceFolder}/build/src/metric_accumulator_impl/metric_accumulator_test",
+            "args": [
+            ],
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "GCC: Build Debug",
+            "initCommands": ["settings set target.disable-aslr false"]
         }
-
     ]
 }

@@ -1,5 +1,4 @@
 
-add_custom_target(unit_tests)
 
 add_library(function
     function.cpp
@@ -38,9 +37,16 @@ add_library(cmd_options
 )
 
 target_link_libraries(cmd_options
-    PUBLIC
+    PRIVATE
         ${Boost_LIBRARIES}
 )
+target_include_directories(cmd_options
+    PUBLIC
+        ${Boost_INCLUDE_DIRS}
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
 
+
+# Настраиваем библиотеки metric_accumulator_impl и metric_impl
 add_subdirectory(metric_accumulator_impl)
 add_subdirectory(metric_impl)
