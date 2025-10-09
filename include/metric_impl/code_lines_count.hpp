@@ -18,10 +18,10 @@
 
 #include "metric.hpp"
 
-namespace analyser::metric::metric_impl {
+namespace analyzer::metric::metric_impl {
 
-struct CodeLinesCountMetric final: IMetric {
+struct CodeLinesCountMetric final : IMetric {
     // здесь ваш код
 };
 
-} // namespace analyser::metric::metric_impl
+}  // namespace analyzer::metric::metric_impl

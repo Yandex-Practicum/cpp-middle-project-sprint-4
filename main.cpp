@@ -27,27 +27,27 @@
 #include "metric_impl/metrics.hpp"
 
 int main(int argc, char *argv[]) {
-    analyser::cmd::ProgramOptions options;
+    analyzer::cmd::ProgramOptions options;
     // распарсите входные параметры
 
-    // analyser::metric::MetricExtractor metric_extractor;
+    // analyzer::metric::MetricExtractor metric_extractor;
     // зарегистрируйте метрики в metric_extractor
 
-    // запустите analyser::AnalyseFunctions
+    // запустите analyzer::AnalyseFunctions
     // выведете результаты анализа на консоль
 
-    // analyser::metric_accumulator::MetricsAccumulator accumulator;
+    // analyzer::metric_accumulator::MetricsAccumulator accumulator;
     // зарегистрируйте аккумуляторы метрик в accumulator
 
-    // запустите analyser::SplitByFiles
-    // запустите analyser::AccumulateFunctionAnalysis для каждого подмножества результатов метрик
+    // запустите analyzer::SplitByFiles
+    // запустите analyzer::AccumulateFunctionAnalysis для каждого подмножества результатов метрик
     // выведете результаты на консоль
 
-    // запустите analyser::SplitByClasses
-    // запустите analyser::AccumulateFunctionAnalysis для каждого подмножества результатов метрик
+    // запустите analyzer::SplitByClasses
+    // запустите analyzer::AccumulateFunctionAnalysis для каждого подмножества результатов метрик
     // выведете результаты на консоль
 
-    // запустите analyser::AccumulateFunctionAnalysis для всех результатов метрик
+    // запустите analyzer::AccumulateFunctionAnalysis для всех результатов метрик
     // выведете результаты на консоль
 
     return 0;

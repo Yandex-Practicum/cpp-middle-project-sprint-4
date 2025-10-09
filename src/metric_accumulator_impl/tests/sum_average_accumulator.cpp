@@ -4,8 +4,8 @@
 
 #include <cmath>
 
-namespace analyser::metric_accumulator::metric_accumulator_impl::test {
+namespace analyzer::metric_accumulator::metric_accumulator_impl::test {
 
 // здесь ваш код
 
-}  // namespace analyser::metric_accumulator::metric_accumulator_impl::test
+}  // namespace analyzer::metric_accumulator::metric_accumulator_impl::test

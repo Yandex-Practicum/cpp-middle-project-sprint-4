@@ -4,8 +4,8 @@ from conan.tools.files import copy, rmdir
 from conan.tools.layout import basic_layout
 import os
 
-class AnalyserConan(ConanFile):
-    name = "analyser"
+class analyzerConan(ConanFile):
+    name = "analyzer"
     version = "1.0.0"
     settings = "os", "compiler", "build_type", "arch"
     

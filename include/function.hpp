@@ -22,7 +22,7 @@ namespace fs = std::filesystem;
 namespace rv = std::ranges::views;
 namespace rs = std::ranges;
 
-namespace analyser::function {
+namespace analyzer::function {
 
 struct Function {
     std::string filename;
@@ -32,7 +32,7 @@ struct Function {
 };
 
 struct FunctionExtractor {
-    std::vector<Function> Get(const analyser::file::File& file);
+    std::vector<Function> Get(const analyzer::file::File &file);
 
 private:
     struct Position {
@@ -52,13 +52,10 @@ private:
         Position end;
     };
 
-    FunctionNameLocation GetNameLocation(const std::string& function_ast);
-    std::string GetNameFromSource(const std::string& function_ast,
-                                  const std::vector<std::string>& lines);
-    std::optional<ClassInfo> FindEnclosingClass(const std::string& ast,
-                                                const FunctionNameLocation& func_loc);
-    std::string GetClassNameFromSource(const ClassInfo& class_info,
-                                       const std::vector<std::string>& lines);
+    FunctionNameLocation GetNameLocation(const std::string &function_ast);
+    std::string GetNameFromSource(const std::string &function_ast, const std::vector<std::string> &lines);
+    std::optional<ClassInfo> FindEnclosingClass(const std::string &ast, const FunctionNameLocation &func_loc);
+    std::string GetClassNameFromSource(const ClassInfo &class_info, const std::vector<std::string> &lines);
 };
 
-} // namespace analyser::function
+}  // namespace analyzer::function

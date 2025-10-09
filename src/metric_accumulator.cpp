@@ -18,7 +18,7 @@
 #include <variant>
 #include <vector>
 
-namespace analyser::metric_accumulator {
+namespace analyzer::metric_accumulator {
 
 void MetricsAccumulator::AccumulateNextFunctionResults(const std::vector<metric::MetricResult> &metric_results) const {
     // здесь ваш код
@@ -28,4 +28,4 @@ void MetricsAccumulator::ResetAccumulators() {
     // здесь ваш код
 }
 
-}  // namespace analyser::metric_accumulator
+}  // namespace analyzer::metric_accumulator

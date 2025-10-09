@@ -20,7 +20,7 @@
 
 #include "function.hpp"
 
-namespace analyser::metric {
+namespace analyzer::metric {
 
 void MetricExtractor::RegisterMetric(std::unique_ptr<IMetric> metric) {
     // здесь ваш код
@@ -31,4 +31,4 @@ MetricResults MetricExtractor::Get(const function::Function &func) const {
     return {};
 }
 
-}  // namespace analyser::metric
+}  // namespace analyzer::metric

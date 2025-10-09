@@ -24,9 +24,9 @@ namespace fs = std::filesystem;
 namespace rv = std::ranges::views;
 namespace rs = std::ranges;
 
-namespace analyser::function {
+namespace analyzer::function {
 
-std::vector<Function> FunctionExtractor::Get(const analyser::file::File &file) {
+std::vector<Function> FunctionExtractor::Get(const analyzer::file::File &file) {
     std::vector<Function> functions;
     size_t start = 0;
     const std::string marker = "(function_definition";
@@ -172,4 +172,4 @@ std::string FunctionExtractor::GetClassNameFromSource(const ClassInfo &class_inf
     return class_line.substr(name_start, name_end - name_start);
 }
 
-}  // namespace analyser::function
+}  // namespace analyzer::function

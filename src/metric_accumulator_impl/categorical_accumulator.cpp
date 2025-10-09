@@ -17,8 +17,8 @@
 #include <variant>
 #include <vector>
 
-namespace analyser::metric_accumulator::metric_accumulator_impl {
+namespace analyzer::metric_accumulator::metric_accumulator_impl {
 
 // здесь ваш код
 
-}  // namespace analyser::metric_accumulator::metric_accumulator_impl
+}  // namespace analyzer::metric_accumulator::metric_accumulator_impl

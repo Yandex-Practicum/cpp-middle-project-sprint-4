@@ -2,9 +2,9 @@
 
 #include <gtest/gtest.h>
 
-namespace analyser::metric::metric_impl {
+namespace analyzer::metric::metric_impl {
 
 // здесь ваш код
 TEST(BasicCheck, Sum) { EXPECT_EQ(1 + 1, 2); }
 
-}  // namespace analyser::metric::metric_impl
+}  // namespace analyzer::metric::metric_impl

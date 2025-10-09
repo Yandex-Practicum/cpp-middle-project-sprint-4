@@ -7,7 +7,7 @@
 
 #include <boost/program_options.hpp>
 
-namespace analyser::cmd {
+namespace analyzer::cmd {
 
 namespace po = boost::program_options;
 
@@ -45,4 +45,4 @@ bool ProgramOptions::Parse(int argc, char *argv[]) {
     }
 }
 
-}  // namespace analyser::cmd
+}  // namespace analyzer::cmd

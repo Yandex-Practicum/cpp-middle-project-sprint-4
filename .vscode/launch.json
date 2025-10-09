@@ -7,7 +7,7 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Launch Analyser",
+            "name": "Launch analyzer",
             "program": "${workspaceFolder}/build/analyzer",
             "args": [
                 "-f",

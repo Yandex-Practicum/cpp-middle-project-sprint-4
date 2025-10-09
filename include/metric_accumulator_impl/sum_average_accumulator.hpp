@@ -18,15 +18,15 @@
 
 #include "metric_accumulator.hpp"
 
-namespace analyser::metric_accumulator::metric_accumulator_impl {
+namespace analyzer::metric_accumulator::metric_accumulator_impl {
 
-struct SumAverageAccumulator: public IAccumulator {
+struct SumAverageAccumulator : public IAccumulator {
     struct SumAverage {
         int sum;
         double average;
-        auto operator<=>(const SumAverage&) const = default;
+        auto operator<=>(const SumAverage &) const = default;
     };
-    void Accumulate(const metric::MetricResult& metric_result) override;
+    void Accumulate(const metric::MetricResult &metric_result) override;
 
     virtual void Finalize() override;
 
@@ -40,4 +40,4 @@ private:
     double average = 0;
 };
 
-} // namespace analyser::metric_accumulator::metric_accumulator_impl
+}  // namespace analyzer::metric_accumulator::metric_accumulator_impl
