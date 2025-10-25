@@ -1,29 +1,41 @@
-FROM ubuntu@sha256:79efa276fdefa2ee3911db29b0608f8c0561c347ec3f4d4139980d43b168d991
-
+FROM ubuntu:24.04
 # Update the package database
 RUN apt clean
+RUN apt update && apt install -y software-properties-common
+RUN add-apt-repository -y universe
 RUN apt update
 
 # Install common tools
-RUN apt install -y python3-minimal python3-pip pipx git less vim sudo cmake make g++-15 clang-format clangd-20
-
-# Install additional tools and libraries
-RUN apt install -y nodejs npm cargo
-
-# Cleanup
-RUN apt autoremove -y \
-    && apt autoclean \
+RUN apt update && \
+    DEBIAN_FRONTEND=noninteractive apt install -y \
+        software-properties-common \
+        build-essential \
+        python3-minimal \
+        python3-pip \
+        pipx \
+        git \
+        less \
+        vim \
+        sudo \
+        cmake \
+        nodejs \
+        npm \
+        clang-format \
+        curl \
+        clangd && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/* \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /var/cache/apt/* \
     && rm -rf /tmp/*
 
 # Update  gcc/g++ version to the latest ones
-RUN ln -fs /usr/bin/g++-15 /usr/bin/g++
-RUN ln -fs /usr/bin/gcc-15 /usr/bin/gcc
+# RUN ln -fs /usr/bin/g++-15 /usr/bin/g++
+# RUN ln -fs /usr/bin/gcc-15 /usr/bin/gcc
 
 ARG USERNAME=dev
-ARG USER_UID
-ARG USER_GID
+ARG USER_UID=1000
+ARG USER_GID=1000
 
 RUN printf "\n\n\nReceived args:\n\tUSERNAME=$USERNAME\n\tUSER_UID=$USER_UID\n\tUSER_GID=$USER_GID\n"
 RUN test -n "$USER_UID" && test -n "$USER_GID" || (printf "\n\n\n\tERROR: USER_UID (equal to '$USER_UID') or USER_GID (equal to '$USER_GID') is not set!\n\n\n" && exit 1)
@@ -53,13 +65,19 @@ RUN set -e; \
     \
     echo "User $USERNAME with UID=$USER_UID and GID=$USER_GID was successfully created"
 
+# Установка rustup и последней стабильной версии Rust
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+# RUN rustup update
+
 RUN git clone https://github.com/tree-sitter/tree-sitter
 WORKDIR tree-sitter
 RUN ls -la
 RUN make -j4
 RUN sudo make install
-RUN cargo install tree-sitter-cli --root /usr/local
-ENV PATH="/root/.cargo/bin:${PATH}"
+RUN /root/.cargo/bin/cargo install tree-sitter-cli --version 0.24.7 --root /usr/local --locked
+ENV PATH="/usr/local/bin:/root/.cargo/bin:${PATH}"
 WORKDIR ..
 RUN git clone https://github.com/tree-sitter/tree-sitter-python
 WORKDIR tree-sitter-python/
