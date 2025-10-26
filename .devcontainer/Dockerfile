@@ -57,17 +57,10 @@ RUN set -e; \
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 
-# RUN rustup update
-
-RUN git clone https://github.com/tree-sitter/tree-sitter
-WORKDIR tree-sitter
-RUN ls -la
-RUN make -j4
-RUN sudo make install
 RUN cargo install tree-sitter-cli --version 0.24.7 --root /usr/local --locked
 ENV PATH="/usr/local/bin:/root/.cargo/bin:${PATH}"
 WORKDIR ..
-RUN git clone https://github.com/tree-sitter/tree-sitter-python
+RUN git clone --branch v0.25.0 --depth 1 https://github.com/tree-sitter/tree-sitter-python
 WORKDIR tree-sitter-python/
 RUN ls -la
 RUN tree-sitter init-config
