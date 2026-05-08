@@ -10,6 +10,9 @@ find_package(GTest REQUIRED)
 find_package(range-v3 REQUIRED)
 find_package(Boost REQUIRED COMPONENTS program_options)
 
+include(CTest)
+enable_testing()
+
 include_directories(PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # Сначала настраиваем библиотеки, которые будут подключаться к analyzer
@@ -24,7 +27,8 @@ target_link_libraries(${target}
         metric_accumulator
         metric
         cmd_options
-        #range-v3::range-v3
+        stdc++exp
+        range-v3::range-v3
 )
 
 # BUILD_INTERFACE автоматически подключает include-пути всех библиотек, указанных в target_link_libraries для analyzer
@@ -33,5 +37,4 @@ target_include_directories(${target}
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
 
-include(CTest)
-enable_testing()
+

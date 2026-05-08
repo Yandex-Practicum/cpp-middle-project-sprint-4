@@ -26,6 +26,11 @@ namespace analyzer {
 
 namespace rv = std::ranges::views;
 namespace rs = std::ranges;
+
+using FunctionAnalysis = std::pair<function::Function, metric::MetricResults>;
+using Analysis = std::vector<FunctionAnalysis>;
+using GroupedAnalysis = std::vector<Analysis>;
+
 /**
  * @brief Анализирует список Python-файлов и извлекает метрики для всех функций и методов.
  *
@@ -38,9 +43,27 @@ namespace rs = std::ranges;
  * 5. Для каждой функции вычисляет набор метрик через переданный `metric_extractor`.
  * 6. Возвращает вектор пар: (функция, результаты её метрик).
  */
-auto AnalyseFunctions(const std::vector<std::string> &files,
-                      const analyzer::metric::MetricExtractor &metric_extractor) {
-    // здесь ваш код
+inline Analysis AnalyseFunctions(
+    const std::vector<std::string>& files,
+    const metric::MetricExtractor& metric_extractor)
+{
+    Analysis result;
+
+    std::ranges::for_each(files, [&](const auto& filename) {
+        const file::File file{filename};
+
+        function::FunctionExtractor extractor;
+        const auto functions = extractor.Get(file);
+
+        std::ranges::transform(
+            functions,
+            std::back_inserter(result),
+            [&](const auto& func) {
+                return FunctionAnalysis{func, metric_extractor.Get(func)};
+            });
+    });
+
+    return result;
 }
 
 /**
@@ -61,8 +84,25 @@ auto AnalyseFunctions(const std::vector<std::string> &files,
  *  Чтобы убедиться, что фильтрация работает, проверьте, что свободные функции (без class_name)
  * действительно исчезают из результата.
  */
-auto SplitByClasses(const auto &analysis) {
-    // здесь ваш код
+inline GroupedAnalysis SplitByClasses(const Analysis& analysis)
+{
+    GroupedAnalysis result;
+
+    std::ranges::for_each(analysis, [&](const auto& item) {
+        if (!item.first.class_name.has_value()) {
+            return;
+        }
+
+        if (result.empty() ||
+            result.back().empty() ||
+            result.back().front().first.class_name != item.first.class_name) {
+            result.emplace_back();
+        }
+
+        result.back().push_back(item);
+    });
+
+    return result;
 }
 
 /**
@@ -73,8 +113,21 @@ auto SplitByClasses(const auto &analysis) {
  *   только функции из одного и того же файла (`filename`).
  * - Использует `chunk_by`, поэтому **порядок функций в `analysis` должен быть по файлам**.
  */
-auto SplitByFiles(const auto &analysis) {
-    // здесь ваш код
+inline GroupedAnalysis SplitByFiles(const Analysis& analysis)
+{
+    GroupedAnalysis result;
+
+    std::ranges::for_each(analysis, [&](const auto& item) {
+        if (result.empty() ||
+            result.back().empty() ||
+            result.back().front().first.filename != item.first.filename) {
+            result.emplace_back();
+        }
+
+        result.back().push_back(item);
+    });
+
+    return result;
 }
 
 /**
@@ -85,9 +138,14 @@ auto SplitByFiles(const auto &analysis) {
  *   (то есть по каждой функции и её метрикам).
  * - Передаёт результаты метрик (`elem.second`) в аккумулятор через `AccumulateNextFunctionResults`.
  */
-void AccumulateFunctionAnalysis(const auto &analysis,
-                                const analyzer::metric_accumulator::MetricsAccumulator &accumulator) {
-    // здесь ваш код
+inline void AccumulateFunctionAnalysis(
+    const Analysis& analysis,
+    const metric_accumulator::MetricsAccumulator& accumulator)
+{
+    std::ranges::for_each(analysis, [&](const auto& elem) {
+        accumulator.AccumulateNextFunctionResults(elem.second);
+    });
 }
+
 
 }  // namespace analyzer

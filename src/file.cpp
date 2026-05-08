@@ -42,15 +42,19 @@ std::string File::GetAst(const std::string &filename) try {
                                             return;
 
                                         int status = pclose(pipe);
-                                        if (WIFEXITED(status)) {
-                                            int exit_status = WEXITSTATUS(status);
-                                            if (exit_status != 0) {
-                                                throw std::runtime_error("Command failed with exit code " +
-                                                                         std::to_string(exit_status));
+                                        // if (WIFEXITED(status)) {
+                                        //     int exit_status = WEXITSTATUS(status);
+                                        //     if (exit_status != 0) {
+                                        //         throw std::runtime_error("Command failed with exit code " +
+                                        //                                  std::to_string(exit_status));
+                                        //     }
+                                        // } else {
+                                        //     throw std::runtime_error("Command terminated abnormally");
+                                        // }
+
+                                            if (status != 0) {
+                                                throw std::runtime_error("Command failed with code " + std::to_string(status));
                                             }
-                                        } else {
-                                            throw std::runtime_error("Command terminated abnormally");
-                                        }
                                     })>;
 
     FILE *raw_pipe = popen(full_cmd.c_str(), "r");

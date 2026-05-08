@@ -16,6 +16,7 @@
 #include <string>
 #include <variant>
 #include <vector>
+#include <stdexcept>
 
 namespace analyzer::metric_accumulator::metric_accumulator_impl {
 
@@ -24,7 +25,7 @@ void SumAverageAccumulator::Accumulate(const metric::MetricResult &metric_result
     count++;
 }
 void SumAverageAccumulator::Finalize() {
-    average = static_cast<double>(sum) / count;
+    average = count == 0 ? 0.0 : static_cast<double>(sum) / count;
     is_finalized = true;
 }
 
@@ -37,7 +38,7 @@ void SumAverageAccumulator::Reset() {
 
 SumAverageAccumulator::SumAverage SumAverageAccumulator::Get() const {
     if (!is_finalized)
-        throw std::runtime_error("CategoricalAccumulator::Get() called before Finalize()");
+        throw std::runtime_error("SumAverageAccumulator::Get() called before Finalize()");
     return {sum, average};
 }
 }  // namespace analyzer::metric_accumulator::metric_accumulator_impl

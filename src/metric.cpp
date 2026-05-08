@@ -17,6 +17,7 @@
 #include <string>
 #include <variant>
 #include <vector>
+#include <iterator>
 
 #include "function.hpp"
 
@@ -29,9 +30,21 @@ void MetricExtractor::RegisterMetric(std::unique_ptr<IMetric> metric) { metrics.
  * Эта функция применяет каждый метрический объект из контейнера `metrics`
  * к переданной функции `func` и собирает результаты в вектор.
  */
-MetricResults MetricExtractor::Get(const function::Function &func) const {
-    // здесь ваш код
-    return {};
+MetricResults MetricExtractor::Get(const function::Function &func) const 
+{
+    MetricResults results;
+    results.reserve(metrics.size());
+
+    std::ranges::transform(
+        metrics,
+        std::back_inserter(results),
+        [&func](const auto& metric)
+        {
+            return metric->Calculate(func);
+        }
+    );
+
+    return results;
 }
 
 }  // namespace analyzer::metric
