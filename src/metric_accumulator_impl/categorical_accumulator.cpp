@@ -16,6 +16,7 @@
 #include <string>
 #include <variant>
 #include <vector>
+#include <stdexcept>
 
 namespace analyzer::metric_accumulator::metric_accumulator_impl {
 

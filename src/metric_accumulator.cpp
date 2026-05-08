@@ -17,6 +17,7 @@
 #include <string>
 #include <variant>
 #include <vector>
+#include <stdexcept>
 
 namespace analyzer::metric_accumulator {
 /**
@@ -30,8 +31,20 @@ namespace analyzer::metric_accumulator {
  * - По этому имени в контейнере `accumulators` находится нужный аккумулятор.
  * - Вызывается метод `Accumulate(metric_result)`, который обновляет внутреннее состояние аккумулятора.
  */
-void MetricsAccumulator::AccumulateNextFunctionResults(const std::vector<metric::MetricResult> &metric_results) const {
-    // здесь ваш код
+void MetricsAccumulator::AccumulateNextFunctionResults(const std::vector<metric::MetricResult>& metric_results) const 
+{
+    std::ranges::for_each(metric_results, [this](const auto& metric_result)
+                {
+                    auto it = accumulators.find(metric_result.metric_name);
+
+                    if(it == accumulators.end())
+                    {
+                        throw std::runtime_error("Accumulator for metric '" +  
+                            metric_result.metric_name + "' is not registered");
+                    }
+
+                    it->second->Accumulate(metric_result);
+                });
 }
 /**
  * @brief Сбрасывает состояние всех аккумуляторов.
@@ -40,8 +53,12 @@ void MetricsAccumulator::AccumulateNextFunctionResults(const std::vector<metric:
  * Она проходит по всем зарегистрированным аккумуляторам и вызывает у каждого метод `Reset()`,
  * который обнуляет накопленные значения (сумму, счётчик и т.д.).
  */
-void MetricsAccumulator::ResetAccumulators() {
-    // здесь ваш код
+void MetricsAccumulator::ResetAccumulators() 
+{
+    std::ranges::for_each(accumulators, [](auto& item)
+                {
+                    item.second->Reset();
+                });
 }
 
 }  // namespace analyzer::metric_accumulator
